@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Chasm: The Rift</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #000; color: #ccc; font-family: sans-serif; }
+    #canvas { display: none; width: 100vw; height: 100vh; outline: none; cursor: crosshair; }
+    #canvas.visible { display: block; }
+    #loader {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px; background: #111; z-index: 5;
+    }
+    #loader.hidden { display: none; }
+    #loader-bar { width: min(420px, 80vw); height: 8px; background: #333; border-radius: 4px; overflow: hidden; }
+    #loader-fill { height: 100%; width: 0; background: #8b4513; transition: width 0.15s; }
+    #loader-text { font-size: 14px; color: #aaa; }
+    #error { color: #f66; max-width: 640px; text-align: center; display: none; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <div id="loader-text">Loading Chasm…</div>
+    <div id="loader-bar"><div id="loader-fill"></div></div>
+    <div id="error"></div>
+  </div>
+  <canvas id="canvas" width="1280" height="768" tabindex="0"></canvas>
+  <script>
+(function () {
+  'use strict';
+  var buildTag   = '20260625003000';
+  var canvas = document.getElementById('canvas');
+  var loader = document.getElementById('loader');
+  var loaderFill = document.getElementById('loader-fill');
+  var loaderText = document.getElementById('loader-text');
+  var errorEl = document.getElementById('error');
+
+  function setProgress(p, msg) {
+    loaderFill.style.width = Math.max(0, Math.min(100, p)) + '%';
+    if (msg) loaderText.textContent = msg;
+  }
+
+  function fail(msg) {
+    errorEl.style.display = 'block';
+    errorEl.textContent = msg;
+    loaderText.textContent = 'Error';
+  }
+
+  function unlockAudio() {
+    try {
+      if (window.__chasmMod && window.__chasmMod.SDL2 && window.__chasmMod.SDL2.audioContext) {
+        var ctx = window.__chasmMod.SDL2.audioContext;
+        if (ctx.state === 'suspended') ctx.resume();
+      }
+    } catch (e) {}
+  }
+
+  function mountSaves(mod) {
+    try {
+      mod.FS.mkdir('/saves');
+    } catch (e) {}
+    mod.FS.mount(mod.IDBFS, {}, '/saves');
+    return new Promise(function (resolve) {
+      mod.FS.syncfs(true, function (err) {
+        if (err) console.warn('IDBFS sync:', err);
+        resolve();
+      });
+    });
+  }
+
+  setProgress(5, 'Loading engine…');
+  var s = document.createElement('script');
+  s.src = 'PanzerChasm.js?v=' + buildTag;
+  s.onload = function () {
+    if (typeof createPanzerChasmModule !== 'function') {
+      fail('createPanzerChasmModule missing');
+      return;
+    }
+    setProgress(15, 'Starting…');
+    createPanzerChasmModule({
+      canvas: canvas,
+      print: function (t) { console.log(t); },
+      printErr: function (t) {
+        if (/still waiting on run dependencies/i.test(t) || /^dependency:/i.test(t)) return;
+        console.error(t);
+      },
+      locateFile: function (p) {
+        if (/\.(wasm|data)$/i.test(p)) return p + '?v=' + buildTag;
+        return p;
+      },
+      arguments: [],
+      setStatus: function (text) {
+        if (!text) return;
+        var m = text.match(/(\d+)\/(\d+)/);
+        if (m) setProgress(20 + 70 * (+m[1] / +m[2]), 'Loading data…');
+        else if (/download/i.test(text)) setProgress(25, 'Downloading…');
+        else if (/run/i.test(text)) setProgress(95, 'Starting…');
+      },
+      onRuntimeInitialized: function () {
+        var mod = this;
+        console.log('[Chasm] build', buildTag);
+        mountSaves(mod).then(function () {
+          window.__chasmMod = mod;
+          loader.classList.add('hidden');
+          canvas.classList.add('visible');
+          canvas.focus();
+          canvas.addEventListener('click', unlockAudio);
+          canvas.addEventListener('keydown', unlockAudio);
+        });
+      },
+      onAbort: function (r) {
+        console.error('abort:', r);
+        fail('Engine aborted. Ensure CSM.BIN was included in the build (gamefiles\\CSM.BIN).');
+      }
+    }).then(function (mod) {
+      setProgress(98, 'Launching…');
+      mod.callMain([]);
+    }).catch(function (e) {
+      console.error(e);
+      fail(String(e));
+    });
+  };
+  s.onerror = function () { fail('Failed to load PanzerChasm.js'); };
+  document.body.appendChild(s);
+})();
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+================================================================================
+  GITHUB — Chasm Web (sources + build docs, no CSM.BIN, no prebuilt .data in Git)
+================================================================================
+
+In the repo: web/run.html, web/serve.py, Chasm-Reverse/, scripts/, BUILD.md,
+             gamefiles/README.md
+
+NOT in the repo: gamefiles/CSM.BIN, emsdk/, web/PanzerChasm.{js,wasm,data},
+                web/shaders/ (copied at build time from Chasm-Reverse/shaders/)
+
+--------------------------------------------------------------------------------
+STEP 1. Flatten nested git repos (one-time)
+
+  powershell -File scripts\prepare-github.ps1
+
+--------------------------------------------------------------------------------
+STEP 2. Create a new repo on GitHub
+  https://github.com/new
+  Suggested name: chasmweb
+  Do not add README / .gitignore from GitHub
+
+  Description (198 chars):
+  Browser port of Chasm: The Rift via PanzerChasm (WASM/WebGL). Software
+  renderer, IDBFS saves, CSM.BIN preload. Build scripts + Emscripten patches.
+  Game data not included.
+
+--------------------------------------------------------------------------------
+STEP 3. PowerShell
+
+cd C:\Users\user\Desktop\chasmgit
+
+git add .
+git status
+git commit -m "Chasm web port: PanzerChasm Emscripten, web shell, build scripts"
+
+git branch -M main
+git remote add origin https://github.com/Carter54git/chasmweb.git
+git push -u origin main
+
+--------------------------------------------------------------------------------
+After clone, others should:
+
+  1. gamefiles/CSM.BIN — see gamefiles/README.md
+  2. emsdk — see BUILD.md
+  3. .\scripts\build-web.ps1
+  4. Deploy web/ over HTTP
+
+================================================================================
