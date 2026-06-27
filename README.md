@@ -2,6 +2,16 @@
 
 Browser port of **Chasm: The Rift** using [PanzerChasm](https://github.com/Panzerschrek/Chasm-Reverse) (Emscripten + software renderer).
 
+**Live demo:** https://retrogamescenter.ru/ports/chasmweb/run.html
+
+<p align="center">
+  <a href="https://retrogamescenter.ru/ports/chasmweb/run.html">
+    <img src="screenshots/chasm-gameplay.png" alt="Chasm: The Rift — browser gameplay" width="720">
+  </a>
+</p>
+
+<p align="center"><em>Rain, software renderer, 60 FPS in the browser — click to play the demo.</em></p>
+
 ## Features
 
 - Play in the browser over HTTP (WebGL 2 / software rasterizer)
@@ -44,6 +54,7 @@ After building, upload **the contents of `web/`**:
 | `Chasm-Reverse/` | PanzerChasm engine with Emscripten patches |
 | `gamefiles/` | Your `CSM.BIN` (local only) |
 | `scripts/` | `build-web.ps1`, `build-web.sh`, `prepare-github.ps1` |
+| `screenshots/` | README assets |
 | `BUILD.md` | Full build instructions |
 
 **Not in the repo:** `emsdk/`, `CSM.BIN`, built `PanzerChasm.data` (~62 MB).
