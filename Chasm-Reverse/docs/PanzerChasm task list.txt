@@ -1,0 +1,87 @@
+Spisok zadacj, kotoryje možno i nužno delatj.
+Zadaci, kotoryje vypolneny, nužno otsüda ubiratj.
+Zadaci, v çelom, raspoloženy v porädke prioriteta.
+
+
+[IGROVAJA LOGIKA]
+* Perenos obscöta otryvajemyh castej tel monstrov i ošmötkov na server.
+* Issledovanije raboty vyklücatelej. Vyjasnenije raboty vyklücatelej,
+  izmenäjuscih aktivnuju gruppu poligonov. Issledovanije poroždenija
+  vyklücatelämi zvukov.
+* Bolevoj šok dlä monstrov, kogda te polucajut uron ot okruženija. Otletanije
+  ošmötkov pri polucenii urona ot okruženija.
+* Sozdanije zon träski po komande "quake" proçedury.
+* Issledovanije rascöta stolknovenij s modelämi v originaljnoj igre.
+  Vyjasnenije znacenija parametra "bobj". Pocinka neprohodimosti jolok na urovne
+  1 dopolnenija.
+* Podderžka svojstva "checkgo" proçedur. Vozmožno, dorabotka realizaçii svojstva
+  "checkback".
+* Rakety s razmerom - vozmožnostj v polöte zadetj stenu krajem rakety.
+* Dorabotka bossov.
+* Kalibrovka castoty animaçij oružija, monstrov, objektov urovnä, podbirajemyh
+  predmetov, raket.
+* Kalibrovka konstanty masštaba skorosti perezarädki oružija.
+* Kalibrovka skorosti proçedur. Vyjasnenije nalicija ili otsutstvija skorosti ot
+  priväzannyh k proçedure dvižuscihsä sten i procih objektov.
+* Dorabotka ošmötkov. Otbrasyvanije monstrami ošmötkov raznyh vidov. Raznyj
+  nabor ošmötkov dlä raznyh monstrov. Obrabotka stolknovenij ošmötkov so stenami
+  i modelämi.
+* Sohranenije nevidimosti ubitogo igroka v upavšem s nego rükzake.
+* issledovanije tocnyh mehanizmov raboty predmetov "shield" i "chojin".
+* Issledovanije vlijanija urovnej složnosti na uron.
+* Ulucšenije otryvanija castej tela monstram. Issledovanije togo, kak eto
+  rabotajet v originale.
+
+
+[GRAFIKA]
+* Svetovyje vspuški pri popadanii v monstrov.
+* Naloženije na steny svetokart iz *.map fajla, vmesto ispoljzovanija svetokarty
+  pola.
+* Dorabotki dinamiceskogo osvescenija. Gašenije razbityh fonarej. Naloženije
+  tenej na dinamiceskije steny.
+* Pylevoj šlejf ot ošmötkov, podnätije pyli upavšimi telami monstrov.
+* Miganije pri vklücenii istocnikov sveta, poroždajemyh komandoj "source"
+  proçedur.
+* Plavnyje animaçii, po krajnej mere casti objektov.
+* Çvetokorrekçija. Kak postobrabotka, a ne pri zagruzke palitry.
+* Dorabotki tenej. Otbrasyvanije neskoljkih tenej objektami.
+
+
+[SOFTWARE RENDERER]
+* Dobavlenije v BSP-derevo dinamiceskih sten.
+* Vytaskivanije iz modelej ishodnyh cetyröhugoljnikov, a ne toljko gotovogo
+  razbijenija na treugoljniki.
+* Dinamiceskoje osvescenije.
+
+
+[ZVUK]
+* Zvuki ot ošmötkov.
+* Issledovatj, kak izlucajetsä zvuk ot proçedur pri nalicii neskoljkih
+  parametrov sfxposxy a takže pri nalicii neskoljkih sväzannyh objektov karty.
+* Optimizaçija zagruzki zvukov. V slucaje, kogda v tabliçe zvukov igry ili
+  urovnä imejutsä dublikaty, gruzitj zvuk toljko odin raz i ispoljzovatj jego
+  kak razdeläjemyj.
+* Optimizaçija zagruzki zvukov urovnej - pereispoljzovanije uže zagružennyh
+  zvukov ot predyduscego urovnä.
+
+
+[OBSCEJE]
+* Jedinyj progress zagruzki pri odnovremennoj rabote klijenta i servera na odnoj
+  mašine.
+* Dorabotka sohranenija i zagruzki igry. Sohranenije vmeste s sostojanijem
+  urovnä kontroljnoj summy ishodnoj karty, ctoby predotvratitj zagruzku urovnej
+  s tem že imenem no raznymi fajlami. Dobavlenije kommentarija sohranenija k
+  kontroljnoj summe.
+
+
+[SETJ]
+* Issledovanije raboty setevoj igry originala.
+* Dorabotki igrovoj logiki dlä setevyh režimov.
+* Dorabotki seti. Asinhronnyj "Connect". Zakrytije neotvecajuscego
+  sojedinenija. Boleje informativnyje soobscenija ob ošibkah.
+* Validaçija informaçii, polucennoj iz seti. Nomera oružija, modelej, kadrov
+  i procego dolžny proverätjsä. V ideale igra dolžna sebä korrektno vesti daže
+  jesli po seti budet prihoditj šum.
+* Ekonomija trafika. Otsylka toljko neobhodimyh soobscenij klijentu.
+* Predskazanije na storone klijenta. Nejtralizaçija zaderžki seti i poteri
+  paketov. Rascöt animaçij na storone klijenta.
